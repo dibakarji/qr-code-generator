@@ -37,7 +37,10 @@ def main():
     if output.suffix.lower() != ".png":
         parser.error("Output must be a .png file")
 
-    make_qr(args.data, output, args.fill, args.back, args.box_size)
+    try:
+        make_qr(args.data, output, args.fill, args.back, args.box_size)
+    except OSError as e:
+        parser.error(f"cannot write {output}: {e.strerror or e}")
     print(f"QR code saved to {output.resolve()}")
 
 
